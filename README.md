@@ -1,2 +1,4 @@
 Criando...
+
+
 adicionado [querydb.py](./Super_trunfo_pokemon/querydb.py)
