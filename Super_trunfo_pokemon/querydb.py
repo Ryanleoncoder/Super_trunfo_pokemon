@@ -17,6 +17,7 @@ def criar_tabela_pokedex():
             data TEXT
         )
     """)
+    
     print("Tabela pokedex✅")
     conectar.commit()
     conectar.close()

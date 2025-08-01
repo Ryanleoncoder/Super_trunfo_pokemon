@@ -1,11 +1,10 @@
-import sqlite3
-import requests
+import requests # importe da API
 import random
 
 
 
 
-import querydb
+import querydb #importe do arquivo que vai executar querys 
 querydb.criar_tabela_pokedex()
 
 def pegar_nome_pokemon(pokemon_id):
@@ -62,7 +61,7 @@ while True:
        print("Saindo do jogo")
        break
     else:
-       print("opção imvalida tente novamente: ")
+       print("opção invalida tente novamente: ")
 
 
 """"
