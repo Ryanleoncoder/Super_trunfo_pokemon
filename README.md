@@ -10,7 +10,7 @@ Este é um jogo estilo **Super Trunfo** com Pokémons, que permite ao usuário e
 
 O projeto está em desenvolvimento e atualmente implementa:
 
-- Consulta à [PokéAPI](https://pokeapi.co/) para buscar dados dos pokémons.
+- Baixa os 151 pokemons de Kanto com [PokéAPI](https://pokeapi.co/) e salva em um arquivo JSON.
 - Sorteio aleatório de 3 pokémons para o usuário escolher um.
 - Armazenamento dos pokémons escolhidos em um banco de dados SQLite local (`supertrunfo.db`).
 - Interface simples via terminal com menu para iniciar o jogo, ver score (em desenvolvimento), ver pokémons já encontrados e sair.
