@@ -96,7 +96,7 @@ def menu_pos_escolha(escolhidos):
         if opcao == '1':
             print("\nSeus Pokémons:")
             for i, poke in enumerate(escolhidos, start=1):
-                print(f"{i}. {poke['nome']} - Tipo primario: {poke['tipo_primario']}, tipo_secundario {poke['tipo_secundario']} HP: {poke['hp']}, Ataque: {poke['ataque']}")
+                print(f"{i}. {poke['nome']} - Tipo primario: {poke['tipo_primario']}, tipo_secundario {poke['tipo_secundario']} HP: {poke['hp']}, Ataque: {poke['ataque']}, Defesa: {poke['defesa']}")
         
         elif opcao == '2':
             for i, poke in enumerate(escolhidos, start=1):
