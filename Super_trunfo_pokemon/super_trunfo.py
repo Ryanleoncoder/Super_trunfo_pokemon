@@ -6,7 +6,7 @@ import os
 cache_file = 'kanto_pokemons.json' # Parte essencial: baixa os 151 pokemons da regiao de kanto sem sobrecarregar a api de requests
 
 
-### aparte abaixo foi desenvolvida seguir a regra de Fair Use Policy
+### aparte abaixo foi desenvolvida para seguir a regra de Fair Use Policy
 def baixar_pokemons_kanto():
     pokemons = []
     print("baixando dados dos Pokémons da 1ª geração (Kanto)... ⏰")
@@ -52,30 +52,75 @@ pokemons_kanto = carregar_cache_file()
 import querydb #importando do arquivo que vai executar querys 
 querydb.criar_tabela_pokedex()
 
+
+
+
+
+
 def mostrar_pokemons():
-    ids_sorteados = random.sample(range(len(pokemons_kanto)), 3)
-    print("\nPokémons sorteados:")
-    for i, idx in enumerate(ids_sorteados, start=1):
-        poke = pokemons_kanto[idx]
-        if poke:
+    escolhidos = []
+
+    while len(escolhidos) < 3:
+        ids_sorteados = random.sample(range(len(pokemons_kanto)), 3)
+        print("\nPokémons sorteados:")
+        for i, idx in enumerate(ids_sorteados, start=1):
+            poke = pokemons_kanto[idx]
             print(f"{i}. {poke['nome']}")
-        else:
-            print(f"{i}. Pokémon não encontrado.")
-    
-    while True:
-        option = input("\nEscolha um pokemon\n ou \nDigite 'voltar' para retornar ao menu: ").strip().lower()
+        
+        option = input("\nEscolha um Pokémon (1-3) ou digite 'voltar' para sair: ").strip().lower()
+        
         if option == 'voltar':
             return None
+        
         elif option in ['1', '2', '3']:
-            idx_escolhido = ids_sorteados[int(option) -1]
+            idx_escolhido = ids_sorteados[int(option) - 1]
             escolhido = pokemons_kanto[idx_escolhido]
-            print(f"O pokemon escolhido foi {escolhido['nome']}")
-            break
+            escolhidos.append(escolhido)
+            print(f"Você escolheu: {escolhido['nome']}. Total escolhidos: {len(escolhidos)}/3")
+        
         else:
-            print("Comando inválido. Digite 'voltar' para retornar ao menu. ")
+            print("Opção inválida.")
+    return escolhidos  
 
 
+def menu_pos_escolha(escolhidos):
+    while True:
+        print("\n=== MENU DE EQUIPE ===")
+        print("1. Ver detalhes dos Pokémons")
+        print("2. Escolher 1 para batalhar")
+        print("3. Salvar equipe")
+        print("4. Voltar ao menu principal")
 
+        opcao = input("Escolha uma opção: ")
+
+        if opcao == '1':
+            print("\nSeus Pokémons:")
+            for i, poke in enumerate(escolhidos, start=1):
+                print(f"{i}. {poke['nome']} - Tipo primario: {poke['tipo_primario']}, tipo_secundario {poke['tipo_secundario']} HP: {poke['hp']}, Ataque: {poke['ataque']}")
+        
+        elif opcao == '2':
+            for i, poke in enumerate(escolhidos, start=1):
+                print(f"{i}. {poke['nome']}")
+            escolha = input("Escolha qual Pokémon vai batalhar: ")
+            if escolha in ['1', '2', '3']:
+                escolhido = escolhidos[int(escolha)-1]
+                print(f"{escolhido['nome']} entrou em batalha! 🥊")
+                print(f'Seu adversario é...')
+                
+            else:
+                print("Escolha inválida.")
+        
+        elif opcao == '3':
+            print("Equipe salva com sucesso!")
+            
+        
+        elif opcao == '4':
+            print("Voltando ao menu principal...")
+            break
+
+        else:
+            print("Opção inválida.")
+   
 
 def mostrar_menu():
     print("+====================+\n| 1 - Start          |\n| 2 - Score          |\n| 3 - Pokedex        |\n| 4 - Exit           |\n+====================+")
@@ -86,7 +131,9 @@ while True:
     escolher = input("Escolha uma opção ")
 
     if escolher == '1':
-     mostrar_pokemons()
+     escolhidos = mostrar_pokemons()
+     if escolhidos:
+      menu_pos_escolha(escolhidos)
     elif escolher == '2':
        print("Score do jogador: ")
     elif escolher == '3':
@@ -97,7 +144,5 @@ while True:
     else:
        print("opção invalida tente novamente: ")
 
-"""
-Como ainda não desenvolvi a parte das carta e nem a batalha, o while sempre retorna ao menu.
 
-"""
+
