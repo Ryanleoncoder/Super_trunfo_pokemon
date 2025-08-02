@@ -1,12 +1,10 @@
-import requests # importe da API
+import requests 
 import random
 import json
 import os
 
-cache_file = 'kanto_pokemons.json' # Parte essencial: baixa os 151 pokemons da regiao de kanto sem sobrecarregar a api de requests
+cache_file = 'kanto_pokemons.json' 
 
-
-### aparte abaixo foi desenvolvida para seguir a regra de Fair Use Policy
 def baixar_pokemons_kanto():
     pokemons = []
     print("baixando dados dos Pokémons da 1ª geração (Kanto)... ⏰")
@@ -49,7 +47,7 @@ def carregar_cache_file():
 pokemons_kanto = carregar_cache_file()
 
 
-import querydb #importando do arquivo que vai executar querys 
+import querydb  
 querydb.criar_tabela_pokedex()
 querydb.criar_tabela_score()
 
@@ -96,7 +94,7 @@ def menu_pos_escolha(escolhidos):
         if opcao == '1':
             print("\nSeus Pokémons:")
             for i, poke in enumerate(escolhidos, start=1):
-                print(f"{i}. {poke['nome']} - Tipo primario: {poke['tipo_primario']}, tipo_secundario {poke['tipo_secundario']} HP: {poke['hp']}, Ataque: {poke['ataque']}, Defesa: {poke['defesa']}")
+                print(f"{i}.1 {poke['nome']} \n Tipo primario: {poke['tipo_primario']}\n tipo_secundario {poke['tipo_secundario']}\n HP: {poke['hp']}\n Ataque: {poke['ataque']}\n Defesa: {poke['defesa']}\n")
         
         elif opcao == '2':
             for i, poke in enumerate(escolhidos, start=1):
@@ -123,9 +121,9 @@ def menu_pos_escolha(escolhidos):
    
 
 def mostrar_menu():
-    print("+====================+\n| 1 - Start          |\n| 2 - Score          |\n| 3 - Pokedex        |\n| 4 - Exit           |\n+====================+")
+    print("+====================+\n| 1 - Start🎮        |\n| 2 - Score🎰        |\n| 3 - Pokedex📱      |\n| 4 - Exit🔚         |\n+====================+")
 
-#menu exemplo  (ainda em desenvolvimento)
+#menu  (ainda em desenvolvimento)
 while True:
     mostrar_menu()
     escolher = input("Escolha uma opção ")
