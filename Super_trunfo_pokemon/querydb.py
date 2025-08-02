@@ -18,11 +18,28 @@ def criar_tabela_pokedex():
         )
     """)
     
-    print("Tabela pokedex✅")
+    print("Tabela pokedex ✅")
     conectar.commit()
     conectar.close()
 
 
+def criar_tabela_score():
+    conectar = sqlite3.connect("supertrunfo.db")
+    cursor = conectar.cursor()
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS score (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            jogador TEXT,
+            pokename TEXT,
+            pontos INTEGER,
+            rodadas_vencidas INTEGER,
+            data TEXT
+        )
+    """)
+    
+    print("Tabela Score ✅")
+    conectar.commit()
+    conectar.close()
 
 
    

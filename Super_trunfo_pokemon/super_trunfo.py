@@ -51,7 +51,7 @@ pokemons_kanto = carregar_cache_file()
 
 import querydb #importando do arquivo que vai executar querys 
 querydb.criar_tabela_pokedex()
-
+querydb.criar_tabela_score()
 
 
 
