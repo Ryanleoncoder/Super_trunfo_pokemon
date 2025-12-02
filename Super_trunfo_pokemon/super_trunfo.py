@@ -2,6 +2,7 @@ import requests
 import random
 import json
 import os
+import time
 
 cache_file = 'kanto_pokemons.json' 
 
@@ -81,6 +82,87 @@ def mostrar_pokemons():
     return escolhidos  
 
 
+def adversario_aleatorio():
+    adversario = random.choice(pokemons_kanto)
+    print(f"Seu adversário é {adversario['nome']}! Prepare-se para a batalha! ⚔️")
+    return adversario
+
+        
+def batalha(pokemon_jogador, pokemon_adversario):
+    print(f"\nBatalha entre {pokemon_jogador['nome']} e {pokemon_adversario['nome']}!")
+    pontos_jogador = pokemon_jogador['ataque'] + pokemon_jogador['defesa'] + pokemon_jogador['hp']
+    pontos_adversario = pokemon_adversario['ataque'] + pokemon_adversario['defesa'] + pokemon_adversario['hp']
+
+    print(f"""
+          
+       +====================================================== BATALHA! ======================================================+
+          Pontos de {pokemon_jogador['nome']}: {pontos_jogador} VS Pontos de {pokemon_adversario['nome']}: {pontos_adversario}
+
+          SEU POKÉMON:                                                   POKÉMON ADVERSÁRIO:
+                                                                                                 
+        {pokemon_jogador['nome']}                                                           {pokemon_adversario['nome']}
+          HP: {pokemon_jogador['hp']}                                                          HP: {pokemon_adversario['hp']}
+          Ataque: {pokemon_jogador['ataque']}                                                     Ataque: {pokemon_adversario['ataque']}
+          Defesa: {pokemon_jogador['defesa']}                                                      Defesa: {pokemon_adversario['defesa']}
+       +====================================================== BATALHA! ======================================================+
+
+
+""")
+
+    time.sleep(4)
+
+    if pontos_jogador > pontos_adversario:
+        time.sleep(1)
+        print(f"{pokemon_jogador['nome']} venceu a batalha! 🎉")
+        print(f"""  
+              
+             +========================== Parabéns! ============================+
+              Agora {pokemon_adversario['nome']} está na sua Pokédex 📲
+              você também ganhou 10 pontos para adicionar em um pokemon da sua equipe! 🎖️
+             +=================================================================+
+              """)
+        adicionar = input("Deseja adicionar pontos a um Pokémon da sua equipe? (sim/não): ").strip().lower()
+        if adicionar == 'sim':
+            print("Escolha um Pokémon da sua equipe para adicionar pontos:")
+            print("1. Pokémon 1")
+            print("2. Pokémon 2")
+            print("3. Pokémon 3")
+            escolha = input("Digite o número do Pokémon: ").strip()
+            if escolha in ['1', '2', '3']:
+                pontos_para_adicionar = 10
+                print(f"Você adicionou {pontos_para_adicionar} pontos ao Pokémon {escolha} da sua equipe!")
+            else:
+                print("Escolha inválida. Nenhum ponto adicionado.")
+        
+                               
+    elif pontos_jogador < pontos_adversario:
+        time.sleep(1)
+        print(f"{pokemon_adversario['nome']} venceu a batalha! 😞")
+                                      
+    else:
+        time.sleep(1)
+        print("A batalha terminou em empate! 🤝")
+        print(f"""  
+              
+             +========================== EMPATE! ============================+
+              Agora {pokemon_adversario['nome']} está na sua Pokédex 📲
+              você também ganhou 5 pontos para adicionar em um pokemon da sua equipe! 🎖️
+             +=================================================================+
+              """)
+        adicionar = input("Deseja adicionar pontos a um Pokémon da sua equipe? (sim/não): ").strip().lower()
+        if adicionar == 'sim':
+            print("Escolha um Pokémon da sua equipe para adicionar pontos:")
+            print("1. Pokémon 1")
+            print("2. Pokémon 2")
+            print("3. Pokémon 3")
+            escolha = input("Digite o número do Pokémon: ").strip()
+            if escolha in ['1', '2', '3']:
+                pontos_para_adicionar = 5
+                print(f"Você adicionou {pontos_para_adicionar} pontos ao Pokémon {escolha} da sua equipe!")
+            else:
+                print("Escolha inválida. Nenhum ponto adicionado.")
+
+
 def menu_pos_escolha(escolhidos):
     while True:
         print("\n=== MENU DE EQUIPE ===")
@@ -103,7 +185,13 @@ def menu_pos_escolha(escolhidos):
             if escolha in ['1', '2', '3']:
                 escolhido = escolhidos[int(escolha)-1]
                 print(f"{escolhido['nome']} entrou em batalha! 🥊")
-                print(f'Seu adversario é...')
+                print("Batalha iniciando em 1️⃣  ")
+                time.sleep(1)
+                print("Batalha iniciando em 2️⃣ ")
+                time.sleep(1)
+                print("Batalha iniciando em 3️⃣ ")
+                time.sleep(1)
+                batalha(escolhido, adversario_aleatorio())
                 
             else:
                 print("Escolha inválida.")
@@ -119,6 +207,9 @@ def menu_pos_escolha(escolhidos):
         else:
             print("Opção inválida.")
    
+
+
+
 
 def mostrar_menu():
     print("+====================+\n| 1 - Start🎮        |\n| 2 - Score🎰        |\n| 3 - Pokedex📱      |\n| 4 - Exit🔚         |\n+====================+")
@@ -141,6 +232,5 @@ while True:
        break
     else:
        print("opção invalida tente novamente: ")
-
 
 
