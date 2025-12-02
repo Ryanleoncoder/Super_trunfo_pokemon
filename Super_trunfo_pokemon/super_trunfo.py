@@ -3,6 +3,7 @@ import random
 import json
 import os
 import time
+import datetime
 
 cache_file = 'kanto_pokemons.json' 
 
@@ -94,7 +95,6 @@ def batalha(pokemon_jogador, pokemon_adversario):
     pontos_adversario = pokemon_adversario['ataque'] + pokemon_adversario['defesa'] + pokemon_adversario['hp']
 
     print(f"""
-          
        +====================================================== BATALHA! ======================================================+
           Pontos de {pokemon_jogador['nome']}: {pontos_jogador} VS Pontos de {pokemon_adversario['nome']}: {pontos_adversario}
 
@@ -121,15 +121,24 @@ def batalha(pokemon_jogador, pokemon_adversario):
               você também ganhou 10 pontos para adicionar em um pokemon da sua equipe! 🎖️
              +=================================================================+
               """)
+        addpokedex = querydb.pokedex(
+            pokemon_adversario['nome'],
+            pokemon_adversario['tipo_primario'],
+            pokemon_adversario['tipo_secundario'],
+            pokemon_adversario['hp'],
+            pokemon_adversario['ataque'],
+            pokemon_adversario['defesa']
+        )
         adicionar = input("Deseja adicionar pontos a um Pokémon da sua equipe? (sim/não): ").strip().lower()
         if adicionar == 'sim':
             print("Escolha um Pokémon da sua equipe para adicionar pontos:")
-            print("1. Pokémon 1")
-            print("2. Pokémon 2")
-            print("3. Pokémon 3")
+            for i, poke in enumerate(escolhidos, start=1):
+                print(f"{i}.1 {poke['nome']}")
             escolha = input("Digite o número do Pokémon: ").strip()
             if escolha in ['1', '2', '3']:
+                escolhido_add = escolhidos[int(escolha) - 1]
                 pontos_para_adicionar = 10
+                escolhido_add['ataque'] += pontos_para_adicionar
                 print(f"Você adicionou {pontos_para_adicionar} pontos ao Pokémon {escolha} da sua equipe!")
             else:
                 print("Escolha inválida. Nenhum ponto adicionado.")
@@ -149,15 +158,25 @@ def batalha(pokemon_jogador, pokemon_adversario):
               você também ganhou 5 pontos para adicionar em um pokemon da sua equipe! 🎖️
              +=================================================================+
               """)
+        addpokedex = querydb.pokedex(
+            nome=pokemon_adversario['nome'],
+            tipo_primario=pokemon_adversario['tipo_primario'],
+            tipo_secundario=pokemon_adversario['tipo_secundario'],
+            hp=pokemon_adversario['hp'],
+            ataque=pokemon_adversario['ataque'],
+            defesa=pokemon_adversario['defesa'],
+        )
         adicionar = input("Deseja adicionar pontos a um Pokémon da sua equipe? (sim/não): ").strip().lower()
         if adicionar == 'sim':
             print("Escolha um Pokémon da sua equipe para adicionar pontos:")
-            print("1. Pokémon 1")
-            print("2. Pokémon 2")
-            print("3. Pokémon 3")
+            for i, poke in enumerate(escolhidos, start=1):
+                print(f"{i}. {poke['nome']}")
             escolha = input("Digite o número do Pokémon: ").strip()
             if escolha in ['1', '2', '3']:
+                escolhido_add = escolhidos[int(escolha) - 1]
                 pontos_para_adicionar = 5
+                escolhido_add['ataque'] += pontos_para_adicionar
+                menu_pos_escolha(escolhidos)
                 print(f"Você adicionou {pontos_para_adicionar} pontos ao Pokémon {escolha} da sua equipe!")
             else:
                 print("Escolha inválida. Nenhum ponto adicionado.")
@@ -176,7 +195,7 @@ def menu_pos_escolha(escolhidos):
         if opcao == '1':
             print("\nSeus Pokémons:")
             for i, poke in enumerate(escolhidos, start=1):
-                print(f"{i}.1 {poke['nome']} \n Tipo primario: {poke['tipo_primario']}\n tipo_secundario {poke['tipo_secundario']}\n HP: {poke['hp']}\n Ataque: {poke['ataque']}\n Defesa: {poke['defesa']}\n")
+                print(f"{i}. {poke['nome']} \n Tipo primario: {poke['tipo_primario']}\n tipo_secundario {poke['tipo_secundario']}\n HP: {poke['hp']}\n Ataque: {poke['ataque']}\n Defesa: {poke['defesa']}\n")
         
         elif opcao == '2':
             for i, poke in enumerate(escolhidos, start=1):
@@ -202,6 +221,7 @@ def menu_pos_escolha(escolhidos):
         
         elif opcao == '4':
             print("Voltando ao menu principal...")
+            time.sleep(1)
             break
 
         else:
@@ -212,22 +232,33 @@ def menu_pos_escolha(escolhidos):
 
 
 def mostrar_menu():
-    print("+====================+\n| 1 - Start🎮        |\n| 2 - Score🎰        |\n| 3 - Pokedex📱      |\n| 4 - Exit🔚         |\n+====================+")
+    print("""
+        +=============== MENU ================+
+        |           1 - Start🎮               |
+        |           2 - Score🎰               |
+        |           3 - Pokedex📱             |
+        |           4 - Exit🔚                |
+        +=====================================+
+          
+          """)
 
 #menu  (ainda em desenvolvimento)
 while True:
     mostrar_menu()
     escolher = input("Escolha uma opção ")
 
-    if escolher == '1':
+    if escolher == '1' or escolher.lower() == 'start':
      escolhidos = mostrar_pokemons()
      if escolhidos:
       menu_pos_escolha(escolhidos)
-    elif escolher == '2':
+    elif escolher == '2' or escolher.lower() == 'score':
        print("Score do jogador: ")
-    elif escolher == '3':
+    elif escolher == '3' or escolher.lower() == 'pokedex':
       print("Pokemons já encontrados: ")
-    elif escolher == '4':
+      pokedex_registrada = querydb.mostrar_pokedex()
+      for poke in pokedex_registrada:
+        print(f"- {poke[0]}")
+    elif escolher == '4' or escolher.lower() == 'exit':
        print("Saindo do jogo")
        break
     else:

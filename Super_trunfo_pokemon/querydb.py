@@ -13,8 +13,9 @@ def criar_tabela_pokedex():
             hp INTEGER,
             ataque INTEGER,
             defesa INTEGER,
-            jogador TEXT,
-            data TEXT
+            jogador TEXT DEFAULT NULL,
+            data TEXT DEFAULT (datetime('now'))
+
         )
     """)
     
@@ -33,13 +34,32 @@ def criar_tabela_score():
             pokename TEXT,
             pontos INTEGER,
             rodadas_vencidas INTEGER,
-            data TEXT
+            data TEXT DEFAULT (datetime('now'))
         )
     """)
-    
-    print("Tabela Score ✅")
     conectar.commit()
     conectar.close()
+    print("Tabela Score ✅")
+    
+def pokedex(nome, tipo_primario, tipo_secundario, hp, ataque, defesa):
+    conectar = sqlite3.connect("supertrunfo.db")
+    cursor = conectar.cursor()
+    cursor.execute("""
+        INSERT INTO pokedex (nome, tipo_primario, tipo_secundario, hp, ataque, defesa)
+        VALUES (?, ?, ?, ?, ?, ?)
+    """, (nome, tipo_primario, tipo_secundario, hp, ataque, defesa))
+    conectar.commit()
+    print("Tabela pokedex ✅")
+    print("Tabela Score ✅") 
+    conectar.close()
 
+def mostrar_pokedex():
+    conectar = sqlite3.connect("supertrunfo.db")
+    cursor = conectar.cursor()
+    cursor.execute("""SELECT nome FROM pokedex
+                   limit 5"""
 
-   
+                   )
+    resultados = cursor.fetchall()
+    conectar.close()
+    return resultados
