@@ -186,6 +186,10 @@ def batalha(pokemon_jogador, pokemon_adversario):
             else:
                 print("Escolha inválida. Nenhum ponto adicionado.")
 
+
+      # >> Ao adicionar pontos em caso de empate ou vitória do pokemon de escolha do jogador, o pokemon e o mesmo pokemon salvo no cache ficam com os mesmo status atualizados <<
+      # >> ver de resolver isso futuramente para apenas o pokemon da equipe do jogador ser atualizado <<
+
 # menu após a escolha dos pokémons
 def menu_pos_escolha(escolhidos):
     while True:
