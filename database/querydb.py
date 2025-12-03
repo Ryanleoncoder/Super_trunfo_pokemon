@@ -2,7 +2,7 @@ import sqlite3
 from datetime import datetime
 
 def criar_tabela_pokedex():
-    conectar = sqlite3.connect("supertrunfo.db")
+    conectar = sqlite3.connect("database/supertrunfo.db")
     cursor = conectar.cursor()
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS pokedex (
@@ -25,7 +25,7 @@ def criar_tabela_pokedex():
 
 
 def criar_tabela_score():
-    conectar = sqlite3.connect("supertrunfo.db")
+    conectar = sqlite3.connect("database/supertrunfo.db")
     cursor = conectar.cursor()
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS score (
@@ -42,7 +42,7 @@ def criar_tabela_score():
     print("Tabela Score ✅")
     
 def pokedex(nome, tipo_primario, tipo_secundario, hp, ataque, defesa):
-    conectar = sqlite3.connect("supertrunfo.db")
+    conectar = sqlite3.connect("database/supertrunfo.db")
     cursor = conectar.cursor()
     cursor.execute("""
         INSERT INTO pokedex (nome, tipo_primario, tipo_secundario, hp, ataque, defesa)
@@ -54,7 +54,7 @@ def pokedex(nome, tipo_primario, tipo_secundario, hp, ataque, defesa):
     conectar.close()
 
 def mostrar_pokedex():
-    conectar = sqlite3.connect("supertrunfo.db")
+    conectar = sqlite3.connect("database/supertrunfo.db")
     cursor = conectar.cursor()
     cursor.execute("""SELECT nome FROM pokedex
                    limit 5"""

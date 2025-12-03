@@ -7,7 +7,7 @@ import datetime
 # importes necessários
 
 
-cache_file = 'kanto_pokemons.json' # armazenamento local dos dados dos pokémons
+cache_file = 'database/kanto_pokemons.json' # armazenamento local dos dados dos pokémons
 
 # Função para baixar dados dos pokémons da 1ª geração (Kanto) da API do PokéAPI
 def baixar_pokemons_kanto():
@@ -54,7 +54,7 @@ def carregar_cache_file():
 pokemons_kanto = carregar_cache_file()
 
 #import do módulo de banco de dados
-import querydb  
+import database.querydb as querydb
 querydb.criar_tabela_pokedex()
 querydb.criar_tabela_score()
 
