@@ -4,9 +4,12 @@ import json
 import os
 import time
 import datetime
+# importes necessários
 
-cache_file = 'kanto_pokemons.json' 
 
+cache_file = 'kanto_pokemons.json' # armazenamento local dos dados dos pokémons
+
+# Função para baixar dados dos pokémons da 1ª geração (Kanto) da API do PokéAPI
 def baixar_pokemons_kanto():
     pokemons = []
     print("baixando dados dos Pokémons da 1ª geração (Kanto)... ⏰")
@@ -33,6 +36,8 @@ def baixar_pokemons_kanto():
         json.dump(pokemons, f, indent=2)
     print(f"Dados salvos em {cache_file}")
 
+
+# função para carregar os dados dos pokémons do arquivo local ou baixar da API se o arquivo não existir
 def carregar_cache_file():
     if os.path.exists(cache_file):
         with open(cache_file, 'r', encoding='utf-8') as f:
@@ -48,7 +53,7 @@ def carregar_cache_file():
 
 pokemons_kanto = carregar_cache_file()
 
-
+#import do módulo de banco de dados
 import querydb  
 querydb.criar_tabela_pokedex()
 querydb.criar_tabela_score()
@@ -56,7 +61,7 @@ querydb.criar_tabela_score()
 
 
 
-
+# funcao para sorteamento e escolha de pokémons
 def mostrar_pokemons():
     escolhidos = []
 
@@ -82,13 +87,13 @@ def mostrar_pokemons():
             print("Opção inválida.")
     return escolhidos  
 
-
+# função para selecionar um adversário aleatório
 def adversario_aleatorio():
     adversario = random.choice(pokemons_kanto)
     print(f"Seu adversário é {adversario['nome']}! Prepare-se para a batalha! ⚔️")
     return adversario
 
-        
+# função para realizar a batalha entre o pokémon do jogador e o adversário       
 def batalha(pokemon_jogador, pokemon_adversario):
     print(f"\nBatalha entre {pokemon_jogador['nome']} e {pokemon_adversario['nome']}!")
     pontos_jogador = pokemon_jogador['ataque'] + pokemon_jogador['defesa'] + pokemon_jogador['hp']
@@ -110,16 +115,16 @@ def batalha(pokemon_jogador, pokemon_adversario):
 """)
 
     time.sleep(4)
-
+# Determinar o vencedor
     if pontos_jogador > pontos_adversario:
         time.sleep(1)
         print(f"{pokemon_jogador['nome']} venceu a batalha! 🎉")
         print(f"""  
               
-             +========================== Parabéns! ============================+
+             +========================== Parabéns! ======================================+
               Agora {pokemon_adversario['nome']} está na sua Pokédex 📲
               você também ganhou 10 pontos para adicionar em um pokemon da sua equipe! 🎖️
-             +=================================================================+
+             +===========================================================================+
               """)
         addpokedex = querydb.pokedex(
             pokemon_adversario['nome'],
@@ -133,7 +138,7 @@ def batalha(pokemon_jogador, pokemon_adversario):
         if adicionar == 'sim':
             print("Escolha um Pokémon da sua equipe para adicionar pontos:")
             for i, poke in enumerate(escolhidos, start=1):
-                print(f"{i}.1 {poke['nome']}")
+                print(f"{i}. {poke['nome']}")
             escolha = input("Digite o número do Pokémon: ").strip()
             if escolha in ['1', '2', '3']:
                 escolhido_add = escolhidos[int(escolha) - 1]
@@ -153,10 +158,10 @@ def batalha(pokemon_jogador, pokemon_adversario):
         print("A batalha terminou em empate! 🤝")
         print(f"""  
               
-             +========================== EMPATE! ============================+
+             +========================== EMPATE! ========================================+
               Agora {pokemon_adversario['nome']} está na sua Pokédex 📲
               você também ganhou 5 pontos para adicionar em um pokemon da sua equipe! 🎖️
-             +=================================================================+
+             +===========================================================================+
               """)
         addpokedex = querydb.pokedex(
             nome=pokemon_adversario['nome'],
@@ -181,7 +186,7 @@ def batalha(pokemon_jogador, pokemon_adversario):
             else:
                 print("Escolha inválida. Nenhum ponto adicionado.")
 
-
+# menu após a escolha dos pokémons
 def menu_pos_escolha(escolhidos):
     while True:
         print("\n=== MENU DE EQUIPE ===")
@@ -230,7 +235,7 @@ def menu_pos_escolha(escolhidos):
 
 
 
-
+# LOOP DO MENU PRINCIPAL
 def mostrar_menu():
     print("""
         +=============== MENU ================+
