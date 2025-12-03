@@ -7,7 +7,7 @@ def criar_tabela_pokedex():
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS pokedex (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            nome TEXT,
+            nome TEXT UNIQUE,
             tipo_primario TEXT,
             tipo_secundario TEXT,
             hp INTEGER,
@@ -31,7 +31,7 @@ def criar_tabela_score():
         CREATE TABLE IF NOT EXISTS score (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             jogador TEXT,
-            pokename TEXT,
+            name TEXT unique,
             pontos INTEGER,
             rodadas_vencidas INTEGER,
             data TEXT DEFAULT (datetime('now'))
